@@ -10,30 +10,30 @@ import (
 )
 
 type Client struct {
-	appId              string
-	timestamp          string
-	orgCode            string
-	sign               string  // 签名
-	bodyParamMap       map[string]interface{}  //post 请求参数
-	pathParamMap       map[string]interface{}  // get 请求参数
-	method             string
-	url                string
+	AppId        string
+	Timestamp    string
+	OrgCode      string
+	Sign         string                 // 签名
+	BodyParamMap map[string]interface{} //post 请求参数
+	PathParamMap map[string]interface{} // get 请求参数
+	Method       string
+	Url          string
 }
 
 func (this *Client) DoRequest() (err error) {
 	client := &http.Client{}
-	if strings.EqualFold(this.method,"POST"){
-		b, _ := json.Marshal(this.bodyParamMap)
-		reqsetBody :=strings.NewReader(string(b))
-		req, err := http.NewRequest(this.method, this.url, reqsetBody)
+	if strings.EqualFold(this.Method, "POST") {
+		b, _ := json.Marshal(this.BodyParamMap)
+		reqsetBody := strings.NewReader(string(b))
+		req, err := http.NewRequest(this.Method, this.Url, reqsetBody)
 		if err != nil {
 			// handle error
 		}
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("appId", this.appId)
-		req.Header.Set("timestamp", this.timestamp)
-		req.Header.Set("sign", this.sign)
-		req.Header.Set("orgCode", this.orgCode)
+		req.Header.Set("appId", this.AppId)
+		req.Header.Set("timestamp", this.Timestamp)
+		req.Header.Set("sign", this.Sign)
+		req.Header.Set("orgCode", this.OrgCode)
 		resp, err := client.Do(req)
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
@@ -42,25 +42,25 @@ func (this *Client) DoRequest() (err error) {
 		}
 		fmt.Println(string(body))
 		return err
-	}else if strings.EqualFold(this.method,"GET") {
+	} else if strings.EqualFold(this.Method, "GET") {
 		var buffer bytes.Buffer
-		for k, v := range this.pathParamMap {
+		for k, v := range this.PathParamMap {
 			buffer.WriteString(k)
 			buffer.WriteString("=")
 			buffer.WriteString(v.(string))
 			buffer.WriteString("&")
 		}
 		query := strings.TrimRight(buffer.String(), "&")
-		this.url = this.url + "?" + query
-		req, err := http.NewRequest(this.method, this.url, nil)
+		this.Url = this.Url + "?" + query
+		req, err := http.NewRequest(this.Method, this.Url, nil)
 		if err != nil {
 			// handle error
 		}
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("appId", this.appId)
-		req.Header.Set("timestamp", this.timestamp)
-		req.Header.Set("sign", this.sign)
-		req.Header.Set("orgCode", this.orgCode)
+		req.Header.Set("appId", this.AppId)
+		req.Header.Set("timestamp", this.Timestamp)
+		req.Header.Set("sign", this.Sign)
+		req.Header.Set("orgCode", this.OrgCode)
 		resp, err := client.Do(req)
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
@@ -70,7 +70,5 @@ func (this *Client) DoRequest() (err error) {
 		fmt.Println(string(body))
 		return err
 	}
-	return  nil
+	return nil
 }
-
-
