@@ -1,0 +1,16 @@
+package encoding
+
+import (
+	"crypto/rsa"
+	"testing"
+)
+
+const (
+	PRIVATE_KEY  string= "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANXPTD9mc7psbThiZ4tTYtEam1sgwPyL6OnG03IbUyuTY/R5N2DcsAVrMZ+2Red0JAhfLzer53ijIL9e7eVr6OU1TN7Vzy2w8T9H3WkieILWYNBTo/ltksKcSduS7J/nDZEsDlTBsy4m9O2ekyy4r8etaqTWfhnPIBP3N2AiPPspAgMBAAECgYEA0jfDTAK7fmvk5y85hy8xVU7HuM13cddN5axrcSGUoJ+GA3S7Ei1pk6pVXCamjG8QjnqnviDysRYSuJXpaUyz6fwaG2qjyAJEL3n6mRO6oWmF4bPhTUoX6YByRtnpNJ8JUoZgoLWX50saOBWM4SPjTLb+ClldB9udAN9ljrlv6AECQQDzOkGYsqVYnYXS5fkqljmvyHTbNMgDRBASVZ1GM3XcAT+kD38z031uU+4Y53695vk7dySB+FF6UUIHe1gjMsFBAkEA4QmS39SEQLH8v/OQRFcZ86IWDF/eZjPbnhsNw/2VgIs9VYLBULArpdKtzsjgwCyGUb5anxbOQZ+GOgTKg95X6QJBAJMLpD6xuj7RtOcku7egbK22LdecmFNJIcJD2jpnwBhK9PO1nrxxXsKFoUuTIM+kRQdLZ1ngCzo8yAOH8WgONkECQQCBs+/ofGeBllSUGgDjssQtbRWCKltX0rnZBcTIWscpYJeISqW7KN7vY190GMmZWdBNGwbGPPHCVvyZQhurJ6LJAkB7xKNH4UqcGb3MhQDUz3vRfa4Zka7TPYDRrowH4lfc9I/ZRMeU4L12B6SPUhfxlvgluW12652AlqybQxudAx6P"
+)
+
+func TestSign(t *testing.T) {
+	key,_ :=ParsePKCS8PrivateKey(PRIVATE_KEY)
+	text,_:=Sign("da",key.(*rsa.PrivateKey))
+    t.Log(text)
+}
