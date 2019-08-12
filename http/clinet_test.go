@@ -18,25 +18,25 @@ func TestClient_DoRequest(t *testing.T) {
 	//post
 	var param = new(sign.Scpg)
 	var time = strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	bodyParamMap := make(map[string]interface{})
-	bodyParamMap["transId"] = time
-	bodyParamMap["remark"] = ""
-	bodyParamMap["terminal"] = ""
-	bodyParamMap["event"] = "CONSUME"
-	bodyParamMap["point"] = 100
-	bodyParamMap["memberId"] = "134680196342081156"
-	param.SetParamData(APP_ID, ORG_CODE, time, PRIVATE_KEY, sign.MethodType_POST, bodyParamMap, nil)
-	text, _ := param.GenerateSign()
-	client := Client{Sign: text, AppId: APP_ID, Url: "http://scrm-uat.scpgroup.com.cn/openapi-uat/api/v1/point/reduce", Method: sign.MethodType_POST, Timestamp: time, BodyParamMap: bodyParamMap, OrgCode: ORG_CODE}
-	err := client.DoRequest()
-	fmt.Println(err)
+	// bodyParamMap := make(map[string]interface{})
+	// bodyParamMap["transId"] = time
+	// bodyParamMap["remark"] = ""
+	// bodyParamMap["terminal"] = ""
+	// bodyParamMap["event"] = "CONSUME"
+	// bodyParamMap["point"] = 100
+	// bodyParamMap["memberId"] = "134680196342081156"
+	// param.SetParamData(APP_ID, ORG_CODE, time, PRIVATE_KEY, sign.MethodType_POST, bodyParamMap, nil)
+	// text, _ := param.GenerateSign()
+	// client := Client{Sign: text, AppId: APP_ID, Url: "http://scrm-uat.scpgroup.com.cn/openapi-uat/api/v1/point/reduce", Method: sign.MethodType_POST, Timestamp: time, BodyParamMap: bodyParamMap, OrgCode: ORG_CODE}
+	// err := client.DoRequest()
+	// fmt.Println(err)
 	//get
-	//pathParamMap:=make(map[string]interface{})
-	//pathParamMap["accountType"]="1"
-	//pathParamMap["accountValue"]="66511"
-	//param.SetParamData(APP_ID,ORG_CODE,time,PRIVATE_KEY,sign.MethodType_GET,nil,pathParamMap)
-	//text,_:=param.GenerateSign()
-	//client:=Client{sign:text,appId:APP_ID,url:"http://scrm-uat.scpgroup.com.cn/openapi-uat/api/v1/member",method:sign.MethodType_GET,timestamp:time,pathParamMap:pathParamMap,orgCode:ORG_CODE}
-	//err:=client.DoRequest()
-	//fmt.Println(err)
+	pathParamMap:=make(map[string]interface{})
+	pathParamMap["accountType"]="1"
+	pathParamMap["accountValue"]="66511"
+	param.SetParamData(APP_ID,ORG_CODE,time,PRIVATE_KEY,sign.MethodType_GET,nil,pathParamMap)
+	text,_:=param.GenerateSign()
+	client:=Client{Sign:text,AppId:APP_ID,Url:"http://scrm-uat.scpgroup.com.cn/openapi-uat/api/v1/member",Method:sign.MethodType_GET,Timestamp:time,PathParamMap:pathParamMap,OrgCode:ORG_CODE}
+	err:=client.DoRequest()
+	fmt.Println(err)
 }
